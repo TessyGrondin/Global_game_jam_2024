@@ -6,6 +6,13 @@
 ##
 
 SRC = 	main.cpp\
+		src/Animation.cpp\
+		src/LayerMap.cpp\
+		src/Map.cpp\
+		src/Quiz.cpp\
+		src/Sprite.cpp\
+		src/SpriteSheet.cpp\
+		src/TextBox.cpp\
 
 NAME = make_me_laugh
 

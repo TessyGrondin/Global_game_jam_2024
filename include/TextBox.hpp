@@ -6,6 +6,7 @@ class TextBox : Sprite
 protected:
     sf::Text    m_text;
     std::string m_string;
+    bool        m_drawable = true;
 public:
     TextBox();
     TextBox(std::string str, sf::Font&, std::string path);

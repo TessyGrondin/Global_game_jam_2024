@@ -14,10 +14,10 @@ private:
     unsigned int       m_width;
     std::vector<int>   m_indexes;
     sf::Texture        m_tileset;
-    unsigned int       m_tilesize = 16;
+    int                m_tilesize = 16;
     bool               m_drawable = true;
 public:
-    LayerMap(std::string name ,unsigned int height, unsigned int width, unsigned int tilesize = 16);
+    LayerMap(std::string name ,unsigned int height, unsigned int width, int tilesize);
     ~LayerMap() = default;
     sf::VertexArray get_vertices() {return m_vertices;}
     bool load(std::string path, std::string asset_path);
