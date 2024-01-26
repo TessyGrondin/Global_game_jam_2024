@@ -8,7 +8,8 @@ private:
     int                    m_frame = 0;
     int                    m_width;
     float                  m_latency;
-    std::vector<Animation> animations;
+    std::vector<Animation> m_animations;
+    std::string            m_current_animation;
 public:
     SpriteSheet(std::string path, int width_given);
     ~SpriteSheet() = default;
@@ -16,5 +17,4 @@ public:
     void add_animation(std::string, std::vector<int>);
     void play_animation(std::string anim, sf::Clock& clock);
     int locate_animation(std::string ref);
-    bool in_range(int anim, int anima);
 };

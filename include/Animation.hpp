@@ -7,10 +7,10 @@ using namespace std;
 class Animation
 {
 private:
-    std::string m_name;
-    std::vector<int> m_frames;
-    int m_nb_frame;
-    bool m_loop = true;
+    std::string         m_name;
+    std::vector<int>    m_frames;
+    int                 m_nb_frame;
+    bool                m_loop = true;
 public:
     Animation();
     Animation(std::string, std::vector<int>);
