@@ -1,4 +1,4 @@
-#include "include/LayerMap.hpp"
+#include "../include/LayerMap.hpp"
 
 LayerMap::LayerMap(std::string name, unsigned int height, unsigned int width, unsigned int tilesize = 16)
 {

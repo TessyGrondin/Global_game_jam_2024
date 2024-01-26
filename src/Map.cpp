@@ -1,4 +1,4 @@
-#include "include/Map.hpp"
+#include "../include/Map.hpp"
 
 Map::Map(unsigned int tilesize, unsigned int height, unsigned int width)
 {
