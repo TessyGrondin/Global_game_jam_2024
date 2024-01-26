@@ -15,3 +15,9 @@ bool Map::add_layer(std::string name, std::string path, std::string asset_path)
     m_layers.push_back(layer);
     return true;
 }
+
+void Map::draw(sf::RenderWindow &win)
+{
+    for (int i = 0; i < m_layers.size(); i++)
+        m_layers[i].draw(win);
+}

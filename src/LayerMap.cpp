@@ -71,6 +71,8 @@ bool LayerMap::load(std::string path, std::string asset_path)
 
 void LayerMap::draw(sf::RenderWindow& win)
 {
+    if (!m_drawable)
+        return;
     sf::RenderStates states;
     states.blendMode = sf::BlendAlpha;
     states.transform = sf::Transform::Identity;

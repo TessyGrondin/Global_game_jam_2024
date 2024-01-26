@@ -13,4 +13,5 @@ public:
     Map(unsigned int tilesize = 16, unsigned int height, unsigned int width);
     ~Map() = default;
     bool add_layer(std::string name, std::string path, std::string asset_path);
+    void draw(sf::RenderWindow &win);
 };
