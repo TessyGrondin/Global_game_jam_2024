@@ -1,7 +1,7 @@
 #pragma once
 #include "Sprite.hpp"
 
-class TextBox : Sprite
+class TextBox : public Sprite
 {
 protected:
     sf::Text    m_text;
@@ -16,4 +16,6 @@ public:
     void set_string(std::string);
     std::string get_string() {return m_string;};
     void load(std::string str, sf::Font&, std::string path);
+    sf::Text get_text() {return m_text;}
+    void set_character_size(int size) {m_text.setCharacterSize(size);}
 };

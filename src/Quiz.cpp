@@ -8,15 +8,24 @@ Quiz::Quiz()
     m_question_box.load("", m_font, "");
     m_background.set_texture("assets/quiz_background.png");
     m_rule.load("Le Quiz des blagues de Tonton :\nreponds aux question posee avec des lettres sans accent\nle format de la reponse sera a l'ecran.", m_font, "");
+    m_rule.set_character_size(60);
+    m_rule.setposition({100, 400}, {0, 0});
+    m_question_box.set_character_size(40);
+    m_question_box.setposition({300, 300}, {0, 0});
+    m_answer_box.set_character_size(40);
+    m_answer_box.setposition({300, 350}, {0, 0});
+    m_enter.set_scale({3.75, 2});
+    m_enter.setposition({0, 770}, {50, 50});
+    m_enter.set_character_size(50);
     load_ref();
     load();
 }
 
 void Quiz::load_ref()
 {
-    std::fstream source_file;
+    std::fstream source_file;;
     std::string line;
-    source_file.open("../config/joke.txt");
+    source_file.open("config/joke.txt");
     if (source_file.is_open()) {
         while (source_file.good()) {
             std::getline(source_file, line);
@@ -71,6 +80,7 @@ bool Quiz::valid_format()
 {
     std::string ref = m_answer_box.get_string();
     std::string entry = m_enter.get_string();
+    entry.pop_back();
     if (entry.size() != m_answer.size())
         return false;
     for (int i = 0; !entry.empty() && entry[i]; i++) {
@@ -86,6 +96,7 @@ bool Quiz::check_entry()
 {
     std::string ref = m_answer_box.get_string();
     std::string entry = m_enter.get_string();
+    entry.pop_back();
     if (!valid_format())
         return false;
     for (int i = 0; entry[i]; i++) {
@@ -125,7 +136,7 @@ void Quiz::catch_input(sf::RenderWindow& win, sf::Event evt)
                 str.pop_back();
                 m_enter.set_string(str);
             }
-            else if (str.size() < 42){
+            else if (str.size() < 42) {
                 str.append(1, evt.text.unicode);
                 m_enter.set_string(str);
             }
@@ -146,8 +157,10 @@ void Quiz::loop_rule(sf::RenderWindow& win, sf::Event evt)
             if (evt.type == sf::Event::TextEntered && evt.text.unicode == '\r')
                 return;
         }
+        win.clear();
         m_background.draw(win);
         m_rule.draw(win);
+        win.display();
     }
 }
 
@@ -156,7 +169,9 @@ int Quiz::loop(sf::RenderWindow& win, sf::Event evt)
     loop_rule(win, evt);
     while (win.isOpen() && m_turn < 5) {
         catch_input(win, evt);
+        win.clear();
         draw(win);
+        win.display();
     }
     return m_score;
 }
