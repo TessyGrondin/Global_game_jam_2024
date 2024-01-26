@@ -16,7 +16,7 @@ int SpriteSheet::locate_animation(std::string anim)
         return -1;
     }
     for (int i = 0; !anim.empty() && i < limit; i++)
-        if (anim == m_animations[i].get_name() && !(!m_animations[i].get_loop() && m_frame >= m_animations[i].get_frames().size()))
+        if (anim == m_animations[i].get_name() && !(!m_animations[i].get_loop() && m_frame >= (int)m_animations[i].get_frames().size()))
             return i;
     return -1;
 }
@@ -34,7 +34,7 @@ void SpriteSheet::play_animation(std::string anim, sf::Clock& clock)
         m_current_animation = anim;
     }
     if (timing - m_latency >= 0.10) {
-        if ((m_frame >= m_animations[anim_used].get_frames().size() && m_animations[anim_used].get_loop())) {
+        if ((m_frame >= (int)m_animations[anim_used].get_frames().size() && m_animations[anim_used].get_loop())) {
             m_frame = 0;
             rect.left = m_animations[anim_used].first() * m_width;
         } else {

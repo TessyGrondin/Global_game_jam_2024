@@ -1,6 +1,6 @@
 #include "../include/Map.hpp"
 
-Map::Map(unsigned int tilesize, unsigned int height, unsigned int width)
+Map::Map(unsigned int height, unsigned int width, unsigned int tilesize = 16)
 {
     m_square = tilesize;
     m_height = height;
@@ -18,6 +18,7 @@ bool Map::add_layer(std::string name, std::string path, std::string asset_path)
 
 void Map::draw(sf::RenderWindow &win)
 {
-    for (int i = 0; i < m_layers.size(); i++)
+    int limit = m_layers.size();
+    for (int i = 0; i < limit; i++)
         m_layers[i].draw(win);
 }

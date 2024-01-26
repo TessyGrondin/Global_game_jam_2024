@@ -1,12 +1,13 @@
 #include "../include/LayerMap.hpp"
 
-LayerMap::LayerMap(std::string name, unsigned int height, unsigned int width, unsigned int tilesize = 16)
+LayerMap::LayerMap(std::string name, unsigned int height, unsigned int width, int tilesize = 16)
 {
     m_name = name;
     m_height = height;
     m_width = width;
     m_vertices.setPrimitiveType(sf::Quads);
     m_vertices.resize(m_width * m_height * 4);
+    m_tilesize = tilesize;
 }
 
 bool LayerMap::parse_csv(std::string path, std::string asset_path)
@@ -49,14 +50,14 @@ void LayerMap::fill_vertex(unsigned int x, unsigned int y)
     if (m_indexes[y *m_width + x] == -1)
         return;
     quad = &m_vertices[(x + y * m_width) * 4];
-    quad[0].position = {x * m_tilesize, y * m_tilesize};
-    quad[1].position = {(x + 1) * m_tilesize, y * m_tilesize};
-    quad[2].position = {(x + 1) * m_tilesize, (y + 1) * m_tilesize};
-    quad[3].position = {x * m_tilesize, (y + 1) * m_tilesize};
-    quad[0].texCoords = {tu * m_tilesize, tv * m_tilesize};
-    quad[1].texCoords = {(tu + 1) * m_tilesize, tv * m_tilesize};
-    quad[2].texCoords = {(tu + 1) * m_tilesize, (tv + 1) * m_tilesize};
-    quad[3].texCoords = {tu * m_tilesize, (tv + 1) * m_tilesize};
+    quad[0].position = {x * (float)m_tilesize, y * (float)m_tilesize};
+    quad[1].position = {(x + 1) * (float)m_tilesize, y * (float)m_tilesize};
+    quad[2].position = {(x + 1) * (float)m_tilesize, (y + 1) * (float)m_tilesize};
+    quad[3].position = {x * (float)m_tilesize, (y + 1) * (float)m_tilesize};
+    quad[0].texCoords = {tu * (float)m_tilesize, tv * (float)m_tilesize};
+    quad[1].texCoords = {(tu + 1) * (float)m_tilesize, tv * (float)m_tilesize};
+    quad[2].texCoords = {(tu + 1) * (float)m_tilesize, (tv + 1) * (float)m_tilesize};
+    quad[3].texCoords = {tu * (float)m_tilesize, (tv + 1) * (float)m_tilesize};
 }
 
 bool LayerMap::load(std::string path, std::string asset_path)
