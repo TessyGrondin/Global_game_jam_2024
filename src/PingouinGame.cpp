@@ -35,17 +35,12 @@ void PingouinGame::loop_rule(sf::RenderWindow& win, sf::Event evt)
     }
 }
 
-void PingouinGame::play_defeat(sf::RenderWindow& win, sf::Event evt, bool color)
+void PingouinGame::play_defeat(sf::RenderWindow& win, bool color)
 {
     if (!color)
         m_pen.set_texture("assets/pingouin_rose.png");
+    m_pen.set_origin({0, 0});
     while (win.isOpen() && m_clock.getElapsedTime().asSeconds() < 2) {
-        while (win.pollEvent(evt)) {
-            if (evt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
-                win.close();
-            if (evt.type == sf::Event::TextEntered && evt.text.unicode == '\r')
-                return;
-        }
         m_pen.play_animation("sit");
         win.clear();
         m_background.draw(win);
@@ -64,11 +59,12 @@ int PingouinGame::loop(sf::RenderWindow& win, sf::Event evt)
                 win.close();
         win.clear();
         add_penguin();
+        drag_and_drop();
         draw(win);
         for (int i = 0; i < (int)m_pinguins.size(); i++) {
             sf::Vector2f pos = (*m_pinguins[i]).get_position();
-            if (pos.x >= 800 && pos.y >= 870) {
-                play_defeat(win, evt, (*m_pinguins[i]).get_color());
+            if (pos.x >= (800 + 32) && pos.y >= (870 + 32)) {
+                play_defeat(win, (*m_pinguins[i]).get_color());
                 m_defeat = true;
             }
         }
@@ -84,6 +80,15 @@ int PingouinGame::loop(sf::RenderWindow& win, sf::Event evt)
     return m_score;
 }
 
+bool contains(Sprite square, Pingouin pin)
+{
+    sf::FloatRect sq = square.get_global_bound();
+    sf::FloatRect pi = pin.get_global_bound();
+    if (pi.intersects(sq))
+        return true;
+    return false;
+}
+
 void PingouinGame::draw(sf::RenderWindow& win)
 {
     int lim = m_pinguins.size();
@@ -92,6 +97,18 @@ void PingouinGame::draw(sf::RenderWindow& win)
     m_pink_square.draw(win);
     m_chair.draw(win);
     for (int i = 0; i < lim; i++) {
+        if (contains(m_blue_square, (*m_pinguins[i])) && (*m_pinguins[i]).get_color())
+            (*m_pinguins[i]).set_dead(true);
+        if (contains(m_blue_square, (*m_pinguins[i])) && !(*m_pinguins[i]).get_color()) {
+            play_defeat(win, (*m_pinguins[i]).get_color());
+            m_defeat = true;
+        }
+        if (contains(m_pink_square, (*m_pinguins[i])) && !(*m_pinguins[i]).get_color())
+            (*m_pinguins[i]).set_dead(true);
+        if (contains(m_pink_square, (*m_pinguins[i])) && (*m_pinguins[i]).get_color()) {
+            play_defeat(win, (*m_pinguins[i]).get_color());
+            m_defeat = true;
+        }
         (*m_pinguins[i]).animate();
         (*m_pinguins[i]).draw(win);
     }
@@ -116,4 +133,13 @@ void PingouinGame::add_penguin()
     m_clock.restart();
 }
 
-
+void PingouinGame::drag_and_drop()
+{
+    int lim = m_pinguins.size();
+    for (int i = 0; i < lim; i++) {
+        if ((*m_pinguins[i]).is_cliked() && !(*m_pinguins[i]).get_death()) {
+            (*m_pinguins[i]).set_position({(float)sf::Mouse::getPosition().x, (float)sf::Mouse::getPosition().y});
+            break;
+        }
+    }
+}

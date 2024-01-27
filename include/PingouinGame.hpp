@@ -24,6 +24,6 @@ public:
     void loop_rule(sf::RenderWindow& win, sf::Event evt);
     void draw(sf::RenderWindow& win);
     void add_penguin();
-    void play_defeat(sf::RenderWindow& win, sf::Event evt, bool color);
+    void play_defeat(sf::RenderWindow& win, bool color);
     void drag_and_drop();
 };

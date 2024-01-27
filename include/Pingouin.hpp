@@ -18,4 +18,6 @@ public:
     void move() {m_sprite.move(m_dir);}
     void set_dir(sf::Vector2f start);
     bool get_color() {return m_color;}
+    void set_origin(sf::Vector2f origin) {m_sprite.setOrigin(origin);}
+    void set_dead(bool dead) {m_dead = dead;}
 };
