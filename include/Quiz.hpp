@@ -15,6 +15,7 @@ private:
     sf::Font                 m_font;
     Sprite                   m_background;
     int                      m_turn = 0;
+    sf::Music                m_music;
 public:
     Quiz();
     ~Quiz() = default;
