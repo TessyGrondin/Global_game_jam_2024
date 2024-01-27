@@ -5,8 +5,8 @@ sfVector2f moving_illusion(int *src)
 {
     sfVector2f res;
     float angle = atan2((X_end - X_start), (Y_end - Y_start));
-    res.x = src[5] * cos(angle);
-    res.y = src[5] * sin(angle);
+    res.x = cos(angle);
+    res.y = sin(angle);
     return res;
 }
 
@@ -48,7 +48,3 @@ void move_plane(enti_t *plane, sfClock *clock, mat_t *mat)
         reach_goal(plane);
     }
 }
-
-de 1014 à 1258
-
-244

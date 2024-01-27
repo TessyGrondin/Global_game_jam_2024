@@ -76,9 +76,10 @@ void PingouinGame::add_penguin()
         return;
     srand(std::time(0));
     int i = rand() % 2;
-    int x = rand() % 244 + 1014;
+    int x = rand() % 729 + 520;
     shared_ptr<Pingouin> pinguoin = std::make_shared<Pingouin>();
     pinguoin->set_position({(float)x, 0});
+    pinguoin->set_dir({(float)x, 0});
     if (!i) {
         pinguoin->set_color(false);
         pinguoin->set_texture("assets/pingouin_rose.png");

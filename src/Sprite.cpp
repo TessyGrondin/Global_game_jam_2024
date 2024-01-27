@@ -21,7 +21,6 @@ void Sprite::draw(sf::RenderWindow& win)
 
 void Sprite::set_texture(std::string path)
 {
-    std::cout << "helooo" << std::endl;
     m_texture.loadFromFile(path);
     m_sprite.setTexture(m_texture);
 }
