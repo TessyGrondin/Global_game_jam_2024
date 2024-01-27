@@ -18,7 +18,11 @@ class NotHim {
         void loop_rule(sf::RenderWindow& win, sf::Event evt);
     protected:
     private:
-        std::vector<Sprite>     m_allSprite;
+        sf::Clock                           m_clock;
+        sf::Clock                           m_speedClock;
+        std::vector<shared_ptr<Sprite>>     m_allSprite;
+        std::vector<sf::Vector2i>           m_dir;
+        float                               m_speed = 1;
 };
 
 #endif /* !NOTHIM_HPP_ */
