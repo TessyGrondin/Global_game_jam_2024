@@ -2,8 +2,6 @@
 
 int main(void)
 {
-    sf::RenderWindow win;
-    sf::Event evt;
     int score = 0;
     win.create(sf::VideoMode(1920, 1080), "Les Blagues de Tonton : le Jeu");
     // Quiz quiz;
