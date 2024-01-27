@@ -1,17 +1,36 @@
 #include "../include/SpriteSheet.hpp"
+#include <iostream>
+
+SpriteSheet::SpriteSheet()
+{
+}
 
 SpriteSheet::SpriteSheet(std::string path, int width_given) :
 Sprite(path)
 {
     m_width = width_given;
     m_current_animation = "";
+    sf::IntRect r = m_sprite.getTextureRect();
+    r.width = width_given;
+    std::cout << "top : " << r.top << " left : " << r.left << " height : " << r.height << " width : " << r.width << std::endl;
+    m_sprite.setTextureRect(r);
+}
+
+void SpriteSheet::load(std::string path, int width_given)
+{
+    set_texture(path);
+    m_width = width_given;
+    m_current_animation = "";
+    sf::IntRect r = m_sprite.getTextureRect();
+    r.width = width_given;
+    m_sprite.setTextureRect(r);
 }
 
 int SpriteSheet::locate_animation(std::string anim)
 {
     int limit = m_animations.size();
 
-    if (anim == "") {
+    if (anim == "" || m_animations.empty()) {
         m_frame = 0;
         return -1;
     }
@@ -21,9 +40,9 @@ int SpriteSheet::locate_animation(std::string anim)
     return -1;
 }
 
-void SpriteSheet::play_animation(std::string anim, sf::Clock& clock)
+void SpriteSheet::play_animation(std::string anim)
 {
-    float timing = clock.getElapsedTime().asSeconds();
+    float timing = m_clock.getElapsedTime().asSeconds();
     sf::IntRect rect = m_sprite.getTextureRect();
     int anim_used = locate_animation(anim);
 
@@ -33,28 +52,29 @@ void SpriteSheet::play_animation(std::string anim, sf::Clock& clock)
         m_frame = 0;
         m_current_animation = anim;
     }
-    if (timing - m_latency >= 0.10) {
+    if (timing >= 0.10) {
         if ((m_frame >= (int)m_animations[anim_used].get_frames().size() && m_animations[anim_used].get_loop())) {
             m_frame = 0;
             rect.left = m_animations[anim_used].first() * m_width;
         } else {
             rect.left = m_width * m_animations[anim_used].get_frames()[m_frame];
-            m_frame++;
         }
+        m_frame++;
         m_sprite.setTextureRect(rect);
-        m_latency = timing;
+        m_clock.restart();
     }
 }
 
 void SpriteSheet::add_animation(std::string new_anim, std::vector<int> frames)
 {
     int exist = locate_animation(new_anim);
-
-    if (frames.empty() || new_anim.empty())
+    if (new_anim.empty())
         return;
-    if (m_animations[0].get_name() == "") {
-        m_animations[0].set_name(new_anim);
-        m_animations[0].set_frames(frames);
+    if (m_animations.empty()) {
+        Animation animation;
+        animation.set_name(new_anim);
+        animation.set_frames(frames);
+        m_animations.push_back(animation);
     } else if (exist != -1)
         m_animations[exist].set_frames(frames);
     else
