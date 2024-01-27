@@ -13,6 +13,7 @@ SRC = 	main.cpp\
 		src/Sprite.cpp\
 		src/SpriteSheet.cpp\
 		src/TextBox.cpp\
+		src/NotHim.cpp
 
 NAME = make_me_laugh
 
