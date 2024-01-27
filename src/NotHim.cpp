@@ -10,9 +10,16 @@
 NotHim::NotHim()
 {
     for (int i = 0; i < 20; i++) {
-        m_allSprite.push_back(Sprite("assets/c_moi_imposteur.png"));
-        m_allSprite[i].set_position({float(rand() % 1920), float(rand() % 1080)});
+        std::shared_ptr<Sprite> newimpostor = std::make_shared<Sprite>("assets/c_moi_imposteur.png");
+        newimpostor->set_scale({2, 2});
+        m_allSprite.push_back(newimpostor);
+        m_allSprite[i]->set_position({float(rand() % 1920), float(rand() % 1080)});
+        m_dir.push_back({rand() % 10 - (rand() % 10), rand() % 10 - (rand() % 10)});
     }
+    std::shared_ptr<Sprite> him = std::make_shared<Sprite>("assets/c_moi.png");
+    him->set_scale({2, 2});
+    m_allSprite.push_back(him);
+    m_allSprite.back()->set_position({float(rand() % 1920), float(rand() % 1080)});
 }
 
 NotHim::~NotHim()
@@ -36,16 +43,31 @@ void NotHim::loop_rule(sf::RenderWindow& win, sf::Event evt)
         win.clear();
         MoveAll();
         for (size_t i = 0; i < m_allSprite.size(); i++) {
-            m_allSprite[i].draw(win);
+            m_allSprite[i]->draw(win);
         }
         win.display();
     }
 }
 
 void NotHim::MoveAll() {
+
     for (size_t i = 0; i < m_allSprite.size(); i++) {
-        m_allSprite[i].move(rand() % 21 + (-10), rand() % 21 + (-10));
-        // sf::Vector2f pos = m_allSprite[i].get_position();
+        m_allSprite[i]->move(cos(m_dir[i].x) * m_speed, sin(m_dir[i].y) * m_speed);
+        sf::Vector2f pos = m_allSprite[i]->get_position();
+        if (pos.x < 0 || pos.x > 1920 || pos.y < 0 || pos.y > 1080) {
+            m_allSprite[i]->set_position({float(rand() % 1920), float(rand() % 1080)});
+        }
+        if (m_clock.getElapsedTime().asMilliseconds() > 500) {
+            m_dir[i] = {rand() % 100 - (rand() % 100), rand() % 100 - (rand() % 100)};
+        }
+    }
+    if (m_speedClock.getElapsedTime().asSeconds() > 3) {
+        m_speed = m_speed * 0.70;
+        std::cout << "Actual speed: " << m_speed << std::endl;
+        m_speedClock.restart();
+    }
+    if (m_clock.getElapsedTime().asMilliseconds() > 500) {
+        m_clock.restart();
     }
 }
 

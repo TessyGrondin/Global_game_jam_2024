@@ -13,7 +13,7 @@ SRC = 	main.cpp\
 		src/Sprite.cpp\
 		src/SpriteSheet.cpp\
 		src/TextBox.cpp\
-		src/NotHim.cpp
+		src/NotHim.cpp\
 		src/Pingouin.cpp\
 		src/PingouinGame.cpp\
 
