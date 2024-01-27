@@ -12,7 +12,6 @@ Sprite(path)
     m_current_animation = "";
     sf::IntRect r = m_sprite.getTextureRect();
     r.width = width_given;
-    std::cout << "top : " << r.top << " left : " << r.left << " height : " << r.height << " width : " << r.width << std::endl;
     m_sprite.setTextureRect(r);
 }
 

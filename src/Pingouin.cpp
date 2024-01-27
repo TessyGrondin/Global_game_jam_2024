@@ -12,10 +12,20 @@ SpriteSheet("assets/pingouin_bleu.png", 142)
 
 void Pingouin::animate()
 {
+    if (is_cliked()) {
+        m_moving = false;
+        play_animation("stand");
+    }
     if (m_dead)
         play_animation("sit");
-    else if (m_moving)
+    else if (m_moving) {
+        move();
         play_animation("walk");
-    else
-        play_animation("stand");
+    }
+}
+
+void Pingouin::set_dir(sf::Vector2f start)
+{
+    float angle = atan2((800 - start.y), (870 - start.x));
+    m_dir = {cos(angle), sin(angle)};
 }
