@@ -71,12 +71,7 @@ int PingouinGame::loop(sf::RenderWindow& win, sf::Event evt)
         win.display();
     }
     m_music.stop();
-    int lim = m_pinguins.size();
-    int exact = 0;
-    for (int i = 0; i < lim; i++)
-        if (!(*m_pinguins[i]).get_moving() && (*m_pinguins[i]).get_death())
-            exact++;
-    m_score = exact / 10;
+    m_score = m_local_score / 10;
     return m_score;
 }
 
@@ -89,22 +84,36 @@ bool contains(Sprite square, Pingouin pin)
     return false;
 }
 
+void PingouinGame::destroy_pingouin(int index)
+{
+    if (m_pinguins.empty())
+        return;
+    int last = m_pinguins.size() - 1;
+    if (last != 0)
+        m_pinguins[index] = m_pinguins[last];
+    m_pinguins.pop_back();
+    m_local_score++;
+}
+
 void PingouinGame::draw(sf::RenderWindow& win)
 {
-    int lim = m_pinguins.size();
     m_background.draw(win);
     m_blue_square.draw(win);
     m_pink_square.draw(win);
     m_chair.draw(win);
-    for (int i = 0; i < lim; i++) {
-        if (contains(m_blue_square, (*m_pinguins[i])) && (*m_pinguins[i]).get_color())
-            (*m_pinguins[i]).set_dead(true);
+    for (int i = 0; i < (int)m_pinguins.size(); i++) {
+        if (contains(m_blue_square, (*m_pinguins[i])) && (*m_pinguins[i]).get_color()) {
+            destroy_pingouin(i);
+            break;
+        }
         if (contains(m_blue_square, (*m_pinguins[i])) && !(*m_pinguins[i]).get_color()) {
             play_defeat(win, (*m_pinguins[i]).get_color());
             m_defeat = true;
         }
-        if (contains(m_pink_square, (*m_pinguins[i])) && !(*m_pinguins[i]).get_color())
-            (*m_pinguins[i]).set_dead(true);
+        if (contains(m_pink_square, (*m_pinguins[i])) && !(*m_pinguins[i]).get_color()) {
+            destroy_pingouin(i);
+            break;
+        }
         if (contains(m_pink_square, (*m_pinguins[i])) && (*m_pinguins[i]).get_color()) {
             play_defeat(win, (*m_pinguins[i]).get_color());
             m_defeat = true;
@@ -121,7 +130,7 @@ void PingouinGame::add_penguin()
         return;
     srand(std::time(0));
     int i = rand() % 2;
-    int x = rand() % 729 + 520;
+    int x = (rand() % 729) + 560;
     shared_ptr<Pingouin> pinguoin = std::make_shared<Pingouin>();
     pinguoin->set_position({(float)x, 0});
     pinguoin->set_dir({(float)x, 0});

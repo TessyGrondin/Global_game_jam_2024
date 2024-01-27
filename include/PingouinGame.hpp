@@ -17,6 +17,7 @@ private:
     int                      m_score = 0;
     sf::Font                 m_font;
     Pingouin                 m_pen;
+    int                      m_local_score = 0;
 public:
     PingouinGame();
     ~PingouinGame() = default;
@@ -26,4 +27,5 @@ public:
     void add_penguin();
     void play_defeat(sf::RenderWindow& win, bool color);
     void drag_and_drop();
+    void destroy_pingouin(int index);
 };
