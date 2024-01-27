@@ -17,6 +17,8 @@ Quiz::Quiz()
     m_enter.set_scale({3.75, 2});
     m_enter.setposition({0, 770}, {50, 50});
     m_enter.set_character_size(50);
+    m_music.openFromFile("assets/Quizz.ogg");
+    m_music.setLoop(true);
     load_ref();
     load();
 }
@@ -150,6 +152,7 @@ void Quiz::catch_input(sf::RenderWindow& win, sf::Event evt)
 
 void Quiz::loop_rule(sf::RenderWindow& win, sf::Event evt)
 {
+    m_music.play();
     while (win.isOpen()) {
         while (win.pollEvent(evt)) {
             if (evt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
@@ -173,5 +176,6 @@ int Quiz::loop(sf::RenderWindow& win, sf::Event evt)
         draw(win);
         win.display();
     }
+    m_music.stop();
     return m_score;
 }

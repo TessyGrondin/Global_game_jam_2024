@@ -13,8 +13,10 @@ SRC = 	main.cpp\
 		src/Sprite.cpp\
 		src/SpriteSheet.cpp\
 		src/TextBox.cpp\
+		src/Pingouin.cpp\
+		src/PingouinGame.cpp\
 
-NAME = make_me_laugh
+NAME = les_blagues_de_tonton
 
 OBJ = $(SRC:.cpp=.o)
 
