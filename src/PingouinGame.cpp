@@ -15,6 +15,7 @@ PingouinGame::PingouinGame()
     m_chair.set_position({870, 800});
     m_chair.set_scale({3, 3});
     m_music.openFromFile("assets/Penguin.ogg");
+    m_pen.set_position({870, 800});
 }
 
 void PingouinGame::loop_rule(sf::RenderWindow& win, sf::Event evt)
@@ -34,6 +35,26 @@ void PingouinGame::loop_rule(sf::RenderWindow& win, sf::Event evt)
     }
 }
 
+void PingouinGame::play_defeat(sf::RenderWindow& win, sf::Event evt, bool color)
+{
+    if (!color)
+        m_pen.set_texture("assets/pingouin_rose.png");
+    while (win.isOpen() && m_clock.getElapsedTime().asSeconds() < 2) {
+        while (win.pollEvent(evt)) {
+            if (evt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
+                win.close();
+            if (evt.type == sf::Event::TextEntered && evt.text.unicode == '\r')
+                return;
+        }
+        m_pen.play_animation("sit");
+        win.clear();
+        m_background.draw(win);
+        m_chair.draw(win);
+        m_pen.draw(win);
+        win.display();
+    }
+}
+
 int PingouinGame::loop(sf::RenderWindow& win, sf::Event evt)
 {
     loop_rule(win, evt);
@@ -44,6 +65,13 @@ int PingouinGame::loop(sf::RenderWindow& win, sf::Event evt)
         win.clear();
         add_penguin();
         draw(win);
+        for (int i = 0; i < (int)m_pinguins.size(); i++) {
+            sf::Vector2f pos = (*m_pinguins[i]).get_position();
+            if (pos.x >= 800 && pos.y >= 870) {
+                play_defeat(win, evt, (*m_pinguins[i]).get_color());
+                m_defeat = true;
+            }
+        }
         win.display();
     }
     m_music.stop();
@@ -87,3 +115,5 @@ void PingouinGame::add_penguin()
     m_pinguins.push_back(pinguoin);
     m_clock.restart();
 }
+
+

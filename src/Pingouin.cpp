@@ -12,13 +12,16 @@ SpriteSheet("assets/pingouin_bleu.png", 142)
 
 void Pingouin::animate()
 {
+    if (is_cliked()) {
+        m_moving = false;
+        play_animation("stand");
+    }
     if (m_dead)
         play_animation("sit");
     else if (m_moving) {
         move();
         play_animation("walk");
-    } else
-        play_animation("stand");
+    }
 }
 
 void Pingouin::set_dir(sf::Vector2f start)

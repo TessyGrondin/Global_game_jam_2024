@@ -17,4 +17,5 @@ public:
     bool get_moving() {return m_moving;}
     void move() {m_sprite.move(m_dir);}
     void set_dir(sf::Vector2f start);
+    bool get_color() {return m_color;}
 };
