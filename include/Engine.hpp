@@ -3,3 +3,5 @@
 #include "Map.hpp"
 #include "TextBox.hpp"
 #include "SFML/Audio.hpp"
+#include <cmath>
+#include <memory>

@@ -13,6 +13,8 @@ SRC = 	main.cpp\
 		src/Sprite.cpp\
 		src/SpriteSheet.cpp\
 		src/TextBox.cpp\
+		src/Pingouin.cpp\
+		src/PingouinGame.cpp\
 
 NAME = les_blagues_de_tonton
 

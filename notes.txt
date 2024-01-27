@@ -1,1 +1,54 @@
 faire le jeu du pingouin
+
+
+sfVector2f moving_illusion(int *src)
+{
+    sfVector2f res;
+    float angle = atan2((X_end - X_start), (Y_end - Y_start));
+    res.x = src[5] * cos(angle);
+    res.y = src[5] * sin(angle);
+    return res;
+}
+
+enti_t plane_create(int *src)
+{
+    enti_t res;
+    res.dir = moving_illusion(src);
+    res.end = (sfVector2f){Y_end, Y_end};
+    sfSprite_setPosition({Y_start, X_start});
+    return res;
+}
+
+void moving(enti_t *plane, sfClock *clock)
+{
+    sfTime time = sfClock_getElapsedTime(clock);
+    float moment = sfTime_asSeconds(time);
+    if (moment >= 0.1 && plane->sp != NULL && plane->text != NULL) {
+        sfSprite_move(plane->sp, plane->dir);
+    }
+}
+
+int reach_goal(enti_t *plane)
+{
+    sfVector2f position = sfSprite_getPosition(plane->sp);
+    float x = (plane->end.x - position.x) * (plane->end.x - position.x);
+    float y = (plane->end.y - position.y) * (plane->end.y - position.y);
+    float dist = sqrt(x + y);
+    if (dist <= 2) {
+        sit;
+        return 0;
+    }
+    return 1;
+}
+
+void move_plane(enti_t *plane, sfClock *clock, mat_t *mat)
+{
+    if (delay_is_over(plane, clock) == 1) {
+        moving(plane, clock);
+        reach_goal(plane);
+    }
+}
+
+de 1014 à 1258
+
+244

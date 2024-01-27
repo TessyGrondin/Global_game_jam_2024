@@ -1,4 +1,5 @@
 #include "../include/Sprite.hpp"
+#include <iostream>
 
 Sprite::Sprite()
 {
@@ -6,8 +7,10 @@ Sprite::Sprite()
 
 Sprite::Sprite(std::string path)
 {
-    if (!m_texture.loadFromFile(path))
+    if (!m_texture.loadFromFile(path)) {
+        std::cout << "file not found" << std::endl;
         exit(0);
+    }
     m_sprite.setTexture(m_texture);
 }
 
@@ -18,6 +21,7 @@ void Sprite::draw(sf::RenderWindow& win)
 
 void Sprite::set_texture(std::string path)
 {
+    std::cout << "helooo" << std::endl;
     m_texture.loadFromFile(path);
     m_sprite.setTexture(m_texture);
 }
