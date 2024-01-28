@@ -27,7 +27,7 @@ NotHim::~NotHim()
 }
 
 int NotHim::loop(sf::RenderWindow& win, sf::Event evt) {
-    while (win.isOpen()) {
+    while (win.isOpen() && !m_clicked) {
         loop_rule(win, evt);
     }
     return 0;
@@ -35,12 +35,16 @@ int NotHim::loop(sf::RenderWindow& win, sf::Event evt) {
 
 void NotHim::loop_rule(sf::RenderWindow& win, sf::Event evt)
 {
-    while (win.isOpen()) {
+    while (win.isOpen() && !m_clicked) {
         while (win.pollEvent(evt)) {
             if (evt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 win.close();
+            if (m_allSprite.back()->is_cliked()) {
+                m_clicked = true;
+            }
         }
         win.clear();
+        m_background.draw(win);
         MoveAll();
         for (size_t i = 0; i < m_allSprite.size(); i++) {
             m_allSprite[i]->draw(win);
@@ -50,7 +54,6 @@ void NotHim::loop_rule(sf::RenderWindow& win, sf::Event evt)
 }
 
 void NotHim::MoveAll() {
-
     for (size_t i = 0; i < m_allSprite.size(); i++) {
         m_allSprite[i]->move(cos(m_dir[i].x) * m_speed, sin(m_dir[i].y) * m_speed);
         sf::Vector2f pos = m_allSprite[i]->get_position();
@@ -63,7 +66,6 @@ void NotHim::MoveAll() {
     }
     if (m_speedClock.getElapsedTime().asSeconds() > 3) {
         m_speed = m_speed * 0.70;
-        std::cout << "Actual speed: " << m_speed << std::endl;
         m_speedClock.restart();
     }
     if (m_clock.getElapsedTime().asMilliseconds() > 500) {

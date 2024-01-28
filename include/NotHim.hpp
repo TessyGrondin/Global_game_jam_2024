@@ -18,11 +18,13 @@ class NotHim {
         void loop_rule(sf::RenderWindow& win, sf::Event evt);
     protected:
     private:
+        Sprite                              m_background = Sprite("assets/beach.png");
         sf::Clock                           m_clock;
         sf::Clock                           m_speedClock;
         std::vector<shared_ptr<Sprite>>     m_allSprite;
         std::vector<sf::Vector2i>           m_dir;
         float                               m_speed = 1;
+        bool                                m_clicked = false;
 };
 
 #endif /* !NOTHIM_HPP_ */
