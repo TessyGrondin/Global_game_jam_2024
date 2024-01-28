@@ -18,6 +18,9 @@ private:
     sf::Font                 m_font;
     Pingouin                 m_pen;
     int                      m_local_score = 0;
+    Sound                    m_yoink;
+    Sound                    m_death;
+    Sound                    m_yay;
 public:
     PingouinGame();
     ~PingouinGame() = default;

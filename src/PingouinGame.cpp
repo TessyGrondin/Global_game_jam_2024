@@ -1,6 +1,9 @@
 #include "../include/PingouinGame.hpp"
 
-PingouinGame::PingouinGame()
+PingouinGame::PingouinGame() :
+m_yoink("assets/yoink.wav"),
+m_death("assets/penguin-squeak.wav"),
+m_yay("assets/yay.wav")
 {
     m_font.loadFromFile("assets/Super Enjoy.ttf");
     m_rule.load("C'est l'histoire des pingouin qui respiraient par les fesses.\nUn jour ils s'assoient et ils meurent.\nEmpeche les en les ramenant dans le rectangle de la bonne\ncouleur avec ta souris.", m_font, "");
@@ -40,6 +43,7 @@ void PingouinGame::play_defeat(sf::RenderWindow& win, bool color)
     if (!color)
         m_pen.set_texture("assets/pingouin_rose.png");
     m_pen.set_origin({0, 0});
+    m_death.play();
     while (win.isOpen() && m_clock.getElapsedTime().asSeconds() < 2) {
         m_pen.play_animation("sit");
         win.clear();
@@ -92,6 +96,7 @@ void PingouinGame::destroy_pingouin(int index)
     if (last != 0)
         m_pinguins[index] = m_pinguins[last];
     m_pinguins.pop_back();
+    m_yay.play();
     m_local_score++;
 }
 
@@ -147,6 +152,7 @@ void PingouinGame::drag_and_drop()
     int lim = m_pinguins.size();
     for (int i = 0; i < lim; i++) {
         if ((*m_pinguins[i]).is_cliked() && !(*m_pinguins[i]).get_death()) {
+            m_yoink.play();
             (*m_pinguins[i]).set_position({(float)sf::Mouse::getPosition().x, (float)sf::Mouse::getPosition().y});
             break;
         }
