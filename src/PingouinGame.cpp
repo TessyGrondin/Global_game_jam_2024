@@ -18,6 +18,7 @@ m_yay("assets/yay.wav")
     m_chair.set_position({870, 800});
     m_chair.set_scale({3, 3});
     m_music.openFromFile("assets/Penguin.ogg");
+    m_music.setLoop(true);
     m_pen.set_position({870, 800});
 }
 

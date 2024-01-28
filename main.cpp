@@ -10,9 +10,11 @@ int main(void)
     // Quiz quiz;
     // NotHim nothim;
     PingouinGame pingouin;
+    End end;
     menu.loop(win, evt);
     // score += quiz.loop(win, evt);
     // score += nothim.loop(win, evt);
     score += pingouin.loop(win, evt);
+    score += end.loop(win, evt, score);
     return 0;
 }

@@ -114,6 +114,7 @@ bool Quiz::check_entry()
             m_local_score--;
             m_enter.set_string("");
             m_wrong.play();
+            reload();
             return false;
         }
     }
