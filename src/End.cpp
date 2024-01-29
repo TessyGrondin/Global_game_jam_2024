@@ -21,15 +21,11 @@ int End::loop(sf::RenderWindow& win, sf::Event evt, int value)
     str += "\ncompare avec tes amis !";
     m_text.setString(str);
     m_music.play();
+    m_clock.restart();
     while (win.isOpen() && m_clock.getElapsedTime().asSeconds() < 4) {
-        std::cout << "hello" << std::endl;
         while (win.pollEvent(evt)) {
             if (evt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 win.close();
-            if (evt.type == sf::Event::TextEntered && evt.text.unicode == '\r') {
-                m_music.stop();
-                return 0;
-            }
         }
         win.clear();
         m_background.draw(win);

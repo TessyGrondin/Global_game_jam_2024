@@ -14,6 +14,7 @@ public:
     ~Sprite() = default;
     void draw(sf::RenderWindow& win);
     void set_position(sf::Vector2f position) {m_sprite.setPosition(position);}
+    sf::Vector2f get_position() {return m_sprite.getPosition();}
     void move(float x, float y) {m_sprite.move(x, y);}
     void set_scale(sf::Vector2f scale) {m_sprite.setScale(scale);}
     void set_texture(std::string path);

@@ -28,7 +28,7 @@ class NotHim {
         Sound                               m_yay;
         Sound                               m_huh;
         sf::Music                           m_ivrogne;
-        int                                 m_score = 100;
+        int                                 m_score = 10;
 };
 
 #endif /* !NOTHIM_HPP_ */

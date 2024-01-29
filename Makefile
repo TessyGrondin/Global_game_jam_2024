@@ -11,7 +11,6 @@ SRC = 	main.cpp\
 		src/Map.cpp\
 		src/Quiz.cpp\
 		src/Sprite.cpp\
-		src/Sound.cpp\
 		src/SpriteSheet.cpp\
 		src/TextBox.cpp\
 		src/NotHim.cpp\

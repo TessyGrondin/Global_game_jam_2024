@@ -45,6 +45,7 @@ void PingouinGame::play_defeat(sf::RenderWindow& win, bool color)
         m_pen.set_texture("assets/pingouin_rose.png");
     m_pen.set_origin({0, 0});
     m_death.play();
+    m_clock.restart();
     while (win.isOpen() && m_clock.getElapsedTime().asSeconds() < 2) {
         m_pen.play_animation("sit");
         win.clear();

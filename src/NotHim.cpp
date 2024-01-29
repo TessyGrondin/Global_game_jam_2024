@@ -45,7 +45,8 @@ void NotHim::loop_rule(sf::RenderWindow& win, sf::Event evt)
             if (evt.type == sf::Event::Closed || sf::Keyboard::isKeyPressed(sf::Keyboard::Escape))
                 win.close();
             if (evt.type == sf::Event::MouseButtonPressed && !m_allSprite.back()->is_cliked()) {
-                m_score -= 10;
+                if (m_score > 0)
+                    m_score--;
                 m_huh.play();
             }
             if (m_allSprite.back()->is_cliked()) {
