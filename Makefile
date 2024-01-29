@@ -17,6 +17,9 @@ SRC = 	main.cpp\
 		src/NotHim.cpp\
 		src/Pingouin.cpp\
 		src/PingouinGame.cpp\
+		src/Menu.cpp\
+		src/Sound.cpp\
+		src/End.cpp\
 
 NAME = les_blagues_de_tonton
 

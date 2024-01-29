@@ -1,6 +1,8 @@
 #include "../include/Quiz.hpp"
 
-Quiz::Quiz()
+Quiz::Quiz() :
+m_right("assets/yay.wav"),
+m_wrong("assets/bruh.wav")
 {
     m_font.loadFromFile("assets/Super Enjoy.ttf");
     m_answer_box.load("", m_font, "");
@@ -83,13 +85,19 @@ bool Quiz::valid_format()
     std::string ref = m_answer_box.get_string();
     std::string entry = m_enter.get_string();
     entry.pop_back();
-    if (entry.size() != m_answer.size())
+    if (entry.size() != m_answer.size()) {
+        m_wrong.play();
         return false;
+    }
     for (int i = 0; !entry.empty() && entry[i]; i++) {
-        if (ref[i] == '*' && !letter(entry[i]))
+        if (ref[i] == '*' && !letter(entry[i])) {
+            m_wrong.play();
             return false;
-        if (ref[i] != '*' && entry[i] != ref[i])
+        }
+        if (ref[i] != '*' && entry[i] != ref[i]) {
+            m_wrong.play();
             return false;
+        }
     }
     return true;
 }
@@ -105,9 +113,12 @@ bool Quiz::check_entry()
         if (entry[i] != m_answer[i]) {
             m_local_score--;
             m_enter.set_string("");
+            m_wrong.play();
+            reload();
             return false;
         }
     }
+    m_right.play();
     m_score++;
     m_enter.set_string("");
     return true;

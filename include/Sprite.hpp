@@ -20,6 +20,5 @@ public:
     void set_visibility(bool visible) {m_visible = visible;}
     bool collide(Sprite other);
     sf::FloatRect get_global_bound() {return m_sprite.getGlobalBounds();}
-    sf::Vector2f get_position() {return m_sprite.getPosition();}
     bool is_cliked();
 };

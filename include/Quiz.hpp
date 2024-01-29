@@ -16,6 +16,8 @@ private:
     Sprite                   m_background;
     int                      m_turn = 0;
     sf::Music                m_music;
+    Sound                    m_right;
+    Sound                    m_wrong;
 public:
     Quiz();
     ~Quiz() = default;

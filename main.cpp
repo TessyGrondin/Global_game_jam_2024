@@ -6,9 +6,21 @@ int main(void)
     sf::Event evt;
     int score = 0;
     win.create(sf::VideoMode(1920, 1080), "Les Blagues de Tonton : le Jeu");
-    Quiz quiz;
-    NotHim nothim;
-    nothim.loop(win, evt);
-    score += quiz.loop(win, evt);
+
+    //Quiz quiz;
+    //NotHim nothim;
+    //nothim.loop(win, evt);
+    //score += quiz.loop(win, evt);
+
+    Menu menu;
+    // Quiz quiz;
+    // NotHim nothim;
+    PingouinGame pingouin;
+    End end;
+    menu.loop(win, evt);
+    // score += quiz.loop(win, evt);
+    // score += nothim.loop(win, evt);
+    score += pingouin.loop(win, evt);
+    score += end.loop(win, evt, score);
     return 0;
 }

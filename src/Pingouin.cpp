@@ -8,17 +8,18 @@ SpriteSheet("assets/pingouin_bleu.png", 142)
     add_animation("sit", {0});
     m_animations[1].set_loop(false);
     m_animations[2].set_loop(false);
+    m_sprite.setOrigin({71, 89});
 }
 
 void Pingouin::animate()
 {
+    if (m_dead)
+        return;
     if (is_cliked()) {
         m_moving = false;
         play_animation("stand");
     }
-    if (m_dead)
-        play_animation("sit");
-    else if (m_moving) {
+    if (m_moving) {
         move();
         play_animation("walk");
     }
